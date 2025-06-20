@@ -20,16 +20,20 @@ Parameters
 def adyen_sessions(host_url):
     adyen = Adyen.Adyen()
     adyen.payment.client.xapikey = get_adyen_api_key()
-    adyen.payment.client.platform = "test"  # change to live for production
+    #adyen.payment.client.platform = "test"  # change to live for production
+    adyen.payment.client.platform = "live"  # change to live for production
+    adyen.client.live_endpoint_prefix = "8949b923f75af6b1-AdyenTechSupportIndia"
     adyen.payment.client.merchant_account = get_adyen_merchant_account()
 
     request = {}
 
-    request['amount'] = {"value": "10000", "currency": "EUR"}  # amount in minor units
+    #request['amount'] = {"value": "10000", "currency": "EUR"}  # amount in minor units
+    request['amount'] = {"value": "1000", "currency": "INR"}  # amount in minor units
     request['reference'] = f"Reference {uuid.uuid4()}"  # provide your unique payment reference
     # set redirect URL required for some payment methods
     request['returnUrl'] = f"{host_url}handleShopperRedirect?shopperOrder=myRef"
-    request['countryCode'] = "NL"
+    #request['countryCode'] = "NL"
+    request['countryCode'] = "IN"
 
     # set lineItems: required for some payment methods (ie Klarna)
     request['lineItems'] = \
